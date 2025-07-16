@@ -1,0 +1,30 @@
+name: Render Cookiecutter Template
+
+on:
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4 # Checks out the repository code
+
+    - name: Set up Python
+      uses: actions/setup-python@v5 # Sets up Python on the runner
+      with:
+        python-version: '3.x' # Specify your desired Python version
+
+    - name: Install Cookiecutter
+      run: pip install cookiecutter # Installs the Cookiecutter package
+
+    - name: Render template
+      run: cookiecutter ./demo-template --no-input -o ./rendered # Renders the template using Cookiecutter and outputs to the 'rendered' directory
+
+    - name: Upload rendered artifacts
+      uses: actions/upload-artifact@v4 # Uploads the rendered output as a workflow artifact
+      with:
+        name: rendered-output
+        path: rendered/ # Specifies the path to the rendered output directory
+
