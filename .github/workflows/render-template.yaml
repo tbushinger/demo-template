@@ -20,7 +20,7 @@ jobs:
       run: pip install cookiecutter # Installs the Cookiecutter package
 
     - name: Render template
-      run: cookiecutter ./demo-template --no-input -o ./rendered # Renders the template using Cookiecutter and outputs to the 'rendered' directory
+      run: cookiecutter ./.skeleton --no-input -o ./rendered # Renders the template using Cookiecutter and outputs to the 'rendered' directory
 
     - name: Upload rendered artifacts
       uses: actions/upload-artifact@v4 # Uploads the rendered output as a workflow artifact
