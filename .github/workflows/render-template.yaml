@@ -22,9 +22,15 @@ jobs:
     - name: Render template
       run: cookiecutter ./.skeleton --no-input -o ./rendered # Renders the template using Cookiecutter and outputs to the 'rendered' directory
 
-    - name: Upload rendered artifacts
-      uses: actions/upload-artifact@v4 # Uploads the rendered output as a workflow artifact
-      with:
-        name: rendered-output
-        path: rendered/ # Specifies the path to the rendered output directory
+    - name: Configure Git
+      run: |
+        git config user.name "Tony Bushinger"
+        git config user.email "tbushinger@gmail.com" # Configure Git identity for the bot
+
+    - name: Commit and push changes
+      run: |
+        cd rendered # Navigate to the rendered output directory
+        git add . # Add all changes
+        git commit -m "Render Cookiecutter template" || echo "No changes to commit" # Commit changes, continue if no changes
+        git push # Push changes to the repository
 
